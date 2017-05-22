@@ -1,0 +1,2 @@
+string slug
+string value
