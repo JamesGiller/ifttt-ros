@@ -1,0 +1,5 @@
+<launch>
+    <param name="source_topic_name" type="string" value="chatter" />
+    <node name="sample_source" pkg="ifttt" type="sample_source_publisher_node" />
+    <test test-name="test" pkg="ifttt" type="test_trigger_event_publisher" />
+</launch>
