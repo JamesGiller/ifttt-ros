@@ -1,4 +1,4 @@
-#include "ifttt/trigger_event_publisher.h"
+#include "trigger_event_publisher.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>

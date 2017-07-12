@@ -6,7 +6,7 @@
 #include <functional>
 #include <string>
 
-#include "ros/ros.h"
+#include <ros/ros.h>
 
 #include "ifttt/TriggerEvent.h"
 

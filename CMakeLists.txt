@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -105,7 +105,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
  INCLUDE_DIRS include
-#  LIBRARIES ifttt
+ LIBRARIES trigger_event_repository
  CATKIN_DEPENDS message_runtime roscpp std_msgs
 #  DEPENDS system_lib
 )
@@ -118,23 +118,25 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  include
+  include/ifttt
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/ifttt.cpp
-# )
+add_library(trigger_event_repository
+  src/trigger_event_repository.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(trigger_event_repository ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
+# add_executable(local_ifttt_server src/local_ifttt_server.cpp)
 add_executable(sample_source_publisher_node test/trigger_event_publisher/sample_source_publisher_node.cpp)
 
 ## Rename C++ executable without prefix
@@ -148,6 +150,10 @@ add_executable(sample_source_publisher_node test/trigger_event_publisher/sample_
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+# target_link_libraries(local_ifttt_server
+#  ${catkin_LIBRARIES}
+# )
+
 target_link_libraries(sample_source_publisher_node
   ${catkin_LIBRARIES}
 )
@@ -199,15 +205,28 @@ if(CATKIN_ENABLE_TESTING)
   find_library(GMOCK_LIBRARIES libgmock)
   if(NOT GMOCK_LIBRARIES)
     add_library(libgmock /usr/src/gmock/src/gmock-all.cc)
+    set(GMOCK libgmock CACHE INTERNAL "")
+  else()
+    set(GMOCK ${GMOCK_LIBRARIES} CACHE INTERNAL "")
   endif()
 
   add_rostest_gtest(test_trigger_event_publisher
     test/trigger_event_publisher/trigger_event_publisher.test
     test/trigger_event_publisher/test_trigger_event_publisher.cpp
   )
+  
+  add_rostest_gtest(test_trigger_event_repository
+    test/trigger_event_repository/trigger_event_repository.test
+    test/trigger_event_repository/test_trigger_event_repository.cpp
+  )
 
   target_link_libraries(test_trigger_event_publisher
-    libgmock
+    ${GMOCK}
+    ${catkin_LIBRARIES}
+  )
+
+  target_link_libraries(test_trigger_event_repository
+    trigger_event_repository
     ${catkin_LIBRARIES}
   )
 endif()
