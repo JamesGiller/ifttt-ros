@@ -15,25 +15,26 @@ using FieldConstraints = std::unordered_map<std::string, std::string>;
 class TriggerEventRepository
 {
 public:
-    TriggerEventRepository(std::size_t max_capacity);
+  explicit TriggerEventRepository(std::size_t max_capacity);
 
-    TriggerEventRepository(TriggerEventRepository &&) = default;
+  TriggerEventRepository(TriggerEventRepository &&) = default;
 
-    TriggerEventRepository(const TriggerEventRepository &) = delete;
+  TriggerEventRepository(const TriggerEventRepository &) = delete;
 
-    TriggerEventRepository & operator=(TriggerEventRepository &&);
+  TriggerEventRepository & operator=(TriggerEventRepository &&);
 
-    TriggerEventRepository & operator=(const TriggerEventRepository &) = delete;
+  TriggerEventRepository & operator=(const TriggerEventRepository &) = delete;
 
-    ~TriggerEventRepository();
+  ~TriggerEventRepository();
 
-    void registerTriggerEvent(TriggerEvent event);
+  void registerTriggerEvent(TriggerEvent event);
 
-    std::vector<TriggerEvent> queryMatchingEvents(std::size_t max_num_matches, const FieldConstraints & field_constraints);
+  std::vector<TriggerEvent> queryMatchingEvents(std::size_t max_num_matches,
+                                                const FieldConstraints & field_constraints) const;
 
 private:
-    class Impl;
-    std::unique_ptr<Impl> pimpl_;
+  class Impl;
+  std::unique_ptr<Impl> pimpl_;
 };
 }
 #endif
