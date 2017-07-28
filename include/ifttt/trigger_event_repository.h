@@ -17,7 +17,7 @@ class TriggerEventRepository
 public:
   explicit TriggerEventRepository(std::size_t max_capacity);
 
-  TriggerEventRepository(TriggerEventRepository &&) = default;
+  TriggerEventRepository(TriggerEventRepository &&);
 
   TriggerEventRepository(const TriggerEventRepository &) = delete;
 

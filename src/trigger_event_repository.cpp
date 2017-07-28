@@ -79,11 +79,17 @@ private:
 
 TriggerEventRepository::TriggerEventRepository(std::size_t max_capacity) : pimpl_(new Impl(max_capacity))
 {
+
 }
+
+TriggerEventRepository::TriggerEventRepository(TriggerEventRepository &&) = default;
 
 TriggerEventRepository & TriggerEventRepository::operator=(TriggerEventRepository && other) = default;
 
-TriggerEventRepository::~TriggerEventRepository() = default;
+TriggerEventRepository::~TriggerEventRepository()
+{
+
+}
 
 void TriggerEventRepository::registerTriggerEvent(TriggerEvent event)
 {
