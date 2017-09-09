@@ -124,14 +124,14 @@ include_directories(
 )
 
 ## Declare a C++ library
-add_library(trigger_event_repository
-  src/trigger_event_repository.cpp
-)
+# add_library(ifttt
+#   src/ifttt.cpp
+# )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-add_dependencies(trigger_event_repository ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(ifttt ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
@@ -216,21 +216,11 @@ if(CATKIN_ENABLE_TESTING)
     test/trigger_event_publisher/test_trigger_event_publisher.cpp
   )
   
-  add_rostest_gtest(test_trigger_event_repository
-    test/trigger_event_repository/trigger_event_repository.test
-    test/trigger_event_repository/test_trigger_event_repository.cpp
-  )
-
   target_link_libraries(test_trigger_event_publisher
     ${GMOCK}
     ${catkin_LIBRARIES}
   )
 
-  target_link_libraries(test_trigger_event_repository
-    ${GMOCK}
-    ${catkin_LIBRARIES}
-    trigger_event_repository
-  )
 endif()
 
 ## Add gtest based cpp test target and link libraries

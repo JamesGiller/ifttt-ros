@@ -1,3 +1,0 @@
-<launch>
-    <test test-name="test" pkg="ifttt" type="test_trigger_event_repository" />
-</launch>
