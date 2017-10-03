@@ -11,9 +11,11 @@ When cloning this repo directly into a catkin workspace, set the name of the res
 
 `git clone https://github.com/JamesGiller/ifttt-ros.git ifttt`
 
-This is because I have named the package "ifttt" in the configuration files (CMakeLists.txt, package.xml).
+This is because the package is named "ifttt" in the configuration files (CMakeLists.txt, package.xml).
 
-## Dependencie
+## Dependencies
+This project has been developed and tested on Ubuntu 16.04
+
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 - [Node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) (v8.6.0)
 - [NPM](https://docs.npmjs.com/getting-started/installing-node) (5.4.2)
