@@ -1,0 +1,27 @@
+{
+  "name": "ifttt",
+  "version": "0.0.1",
+  "description": "A framework for integrating ROS systems with IFTTT.",
+  "keywords": [
+    "ros",
+    "robotics",
+    "ifttt"
+  ],
+  "scripts": {
+    "test_server": "node scripts/test_server.js"
+  },
+  "author": "James Giller <jamgiller@gmail.com>",
+  "maintainers": [
+    "James Giller <jamgiller@gmail.com>"
+  ],
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JamesGiller/ifttt-ros"
+  },
+  "dependencies": {
+    "request": "^2.83.0",
+    "rosnodejs": "^2.1.1"
+  },
+  "private": true
+}

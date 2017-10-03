@@ -1,0 +1,7 @@
+<launch>
+  <param name="maker_key" type="string" value="MyKey" />
+  <rosparam param="trigger_names">
+    ["sample_trigger"]
+  </rosparam>
+  <node name="test_server" pkg="ifttt" type="test_server.js" output="screen" />
+</launch>
