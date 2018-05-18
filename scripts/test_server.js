@@ -11,17 +11,14 @@ const MAKER_KEY_PARAM = "/maker_key";
 const TRIGGER_NAMES_PARAM = "/trigger_names";
 
 function fetchParams(nodeHandle) {
-  // var fetchMakerKey = nodeHandle.hasParam(MAKER_KEY_PARAM)
-  //   .then(exists => {
-  //     if (exists) {
-  //       return nodeHandle.getParam(MAKER_KEY_PARAM);
-  //     } else {
-  //       return Promise.reject(`Parameter ${MAKER_KEY_PARAM} is required`);
-  //     }
-  //   });
-  // There is a bug in hasParam in current version of rosnodejs
-  // Submitted bugfix PR (https://github.com/RethinkRobotics-opensource/rosnodejs/pull/71); waiting on result.
-  var fetchMakerKey = nodeHandle.getParam(MAKER_KEY_PARAM);
+  var fetchMakerKey = nodeHandle.hasParam(MAKER_KEY_PARAM)
+    .then(exists => {
+      if (exists) {
+        return nodeHandle.getParam(MAKER_KEY_PARAM);
+      } else {
+        return Promise.reject(`Parameter ${MAKER_KEY_PARAM} is required`);
+      }
+    });
 
   var fetchTriggerNames = nodeHandle.getParam(TRIGGER_NAMES_PARAM);
 
@@ -64,7 +61,7 @@ function testServer() {
       if (reason instanceof Error) {
         rosnodejs.log.error(`Server: Trace [${reason.stack}]`);
       }
-      process.exit(1);
+      rosnodejs.shutdown();
     });
 }
 

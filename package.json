@@ -20,8 +20,8 @@
     "url": "git://github.com/JamesGiller/ifttt-ros"
   },
   "dependencies": {
-    "request": "^2.83.0",
-    "rosnodejs": "^2.1.1"
+    "request": "^2.86.0",
+    "rosnodejs": "^2.2.0"
   },
   "private": true
 }
