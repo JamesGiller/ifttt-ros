@@ -15,7 +15,8 @@ const MAKER_KEY_PARAM = "/maker_key";
 const TRIGGER_NAMES_PARAM = "/trigger_names";
 const ACTION_SPECS_PARAM = "/action_specs";
 
-const ifttt_action_server = express();
+const ifttt_app_server = express();
+var http_server = null;
 
 /*
  * To be passed to express.json built-in middleware for parsing json request bodies
@@ -85,7 +86,7 @@ function constructTriggerHandlers(makerKey, triggerNames, nodeHandle) {
 
 function ActionHandler(actionName, actionType, nodeHandle) {
   this.actionClient = nodeHandle.actionClientInterface(actionName, actionType);
-  this.handleActionRequest = function (req, res, next) {
+  this.handleActionRequest = (req, res, next) => {
     this.actionClient.sendGoal({goal: req.body});
     res.status(200).json({});
   }
@@ -95,7 +96,8 @@ function constructActionHandlers(actionSpecs, nodeHandle) {
   var handlers = new Array();
   Object.getOwnPropertyNames(actionSpecs).forEach(name => {
     var handler = new ActionHandler(name, actionSpecs[name], nodeHandle);
-    ifttt_action_server.post(`/ifttt-ros/v${API_VERSION}/actions/:${name}`, [actionGoalReviver, handler.handleActionRequest]);
+    ifttt_app_server.post(`/ifttt-ros/v${API_VERSION}/actions/:${name}`,
+                          [express.json({reviver: actionGoalReviver}), handler.handleActionRequest]);
     handlers.push(handler);
   });
   return Promise.resolve(handlers);
@@ -112,11 +114,15 @@ function testServer() {
     .then(([triggerHandlers, actionHandlers]) => {
       rosnodejs.log.info(`Server: Triggers [${triggerHandlers.length}]`);
       rosnodejs.log.info(`Server: Actions [${actionHandlers.length}]`);
+      http_server = ifttt_app_server.listen(8080);
     })
     .catch(reason => {
       rosnodejs.log.error(`Server: Error [${reason}]`);
       if (reason instanceof Error) {
         rosnodejs.log.error(`Server: Trace [${reason.stack}]`);
+      }
+      if(http_server != null) {
+        http_server.close()
       }
       rosnodejs.shutdown();
     });
