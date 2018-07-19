@@ -86,6 +86,7 @@ function constructTriggerHandlers(makerKey, triggerNames, nodeHandle) {
 
 function ActionHandler(actionName, actionType, nodeHandle) {
   this.actionClient = nodeHandle.actionClientInterface(actionName, actionType);
+  // Lambda uses this from enclosing context
   this.handleActionRequest = (req, res, next) => {
     this.actionClient.sendGoal({goal: req.body});
     res.status(200).json({});
