@@ -62,10 +62,17 @@ function TriggerHandler(makerKey, triggerName, nodeHandle) {
   this.subscriber = nodeHandle.subscribe(triggerName, ifttt_msgs.TriggerEvent,
     trigger => {
       rosnodejs.log.info(`Trigger [${triggerName}]: Firing`);
+      var triggerBody = {};
+      var i;
+      for (i = 1; i <= trigger.values.length && i <= 3; ++i) {
+        triggerBody[`value${i}`] = trigger.values[i-1];
+      }
       request(
         {
           method: 'POST',
-          uri: `https://maker.ifttt.com/trigger/${triggerName}/with/key/${makerKey}`
+          uri: `https://maker.ifttt.com/trigger/${triggerName}/with/key/${makerKey}`,
+          json: true,
+          body: triggerBody
         },
         (error, response, body) => {
           if (response.statusCode != 200) {
