@@ -1,7 +1,11 @@
 <launch>
   <param name="maker_key" type="string" value="MyKey" />
   <rosparam param="trigger_names">
-    ["sample_trigger"]
+    <!-- ["sample_trigger"] -->
+    []
+  </rosparam>
+  <rosparam param="action_specs">
+    sample_action: "moveit_msgs/ExecuteTrajectory"
   </rosparam>
   <node name="test_server" pkg="ifttt" type="test_server.js" output="screen" />
 </launch>

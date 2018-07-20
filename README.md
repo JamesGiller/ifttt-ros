@@ -6,6 +6,22 @@ ROS offers many powerful packages that enable users to develop advanced robots w
 
 The project is planned to consist of components that you can plug into any current or new system to translate events and actions between IFTTT and ROS, as well as a [rosnodejs](https://github.com/RethinkRobotics-opensource/rosnodejs)-based test server.
 
+## Current Status
+### Supported Integrations
+Making use of the [IFTTT Webhooks service](https://ifttt.com/maker_webhooks), the following integrations with the IFTTT platform are currently supported:
+
+- ROS topics --> IFTTT triggers
+- Web requests --> ROS action requests
+
+This project provides a C++ class `TriggerEventPublisher` to enable users to translate any ROS message to a `TriggerEvent` message that the rosnodejs-based test server will listen for. Users can also try the [topic_tools transform](https://wiki.ros.org/topic_tools/transform) command to translate messages in Python.
+The test server will automatically make a web request to the Webhooks service that will cause an IFTTT trigger to fire.
+
+When made available at a public URL (e.g. by using [ngrok](https://ngrok.com/)), the test server will listen for web requests to `/ifttt-ros/v0/actions/<action_name>` endpoints, which it will convert to ROS action requests. The IFTTT Webhooks service can be used to make a request in response to a trigger.
+
+## Upcoming Improvements
+- Send fields of ROS topic messages to populate IFTTT trigger fields.
+- Provide a documented working example application.
+
 ## Cloning
 When cloning this repo directly into a catkin workspace, set the name of the resulting directory to ifttt as follows:
 

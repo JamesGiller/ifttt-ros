@@ -54,7 +54,7 @@ TEST(TriggerEventPublisherTest, TriggerEventEncoder_IsCalled)
 
 int main(int argc, char ** argv)
 {
-  ros::init(argc, argv, "test");
+  ros::init(argc, argv, "test_trigger_event_publisher");
   ros::NodeHandle nh;
   testing::InitGoogleMock(&argc, argv);
   return RUN_ALL_TESTS();
